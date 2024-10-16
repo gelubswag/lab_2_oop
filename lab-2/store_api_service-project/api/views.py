@@ -19,9 +19,9 @@ def get_token(request):
 
 @api_view(["GET"])
 def get_goods(request):
-    try:
+    if request.GET.get('token'):
         token = request.GET.get("token")
-    except:
+    else:
         return Response("Token must be present",status=status.HTTP_401_UNAUTHORIZED)
     if not(Token.objects.filter(token=token).exists()):
         return Response("Token is invalid",status=status.HTTP_401_UNAUTHORIZED)
@@ -34,9 +34,9 @@ def get_goods(request):
 
 @api_view(["POST"])
 def new_good(request):
-    try:
+    if request.GET.get('token'):
         token = request.GET.get("token")
-    except:
+    else:
         return Response("Token must be present",status=status.HTTP_401_UNAUTHORIZED)
     if not(Token.objects.filter(token=token).exists()):
         return Response("Token is invalid",status=status.HTTP_401_UNAUTHORIZED)
